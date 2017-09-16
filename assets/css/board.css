@@ -1,3 +1,136 @@
-h1 {
-    color: red;
+@font-face {
+    font-family: Matricha;
+    src: local("Matricha"), url('../fonts/Matricha.ttf');
 }
+@font-face {
+    font-family: SFUIText;
+    src: local("SFUIText"), url('../fonts/SFUIText-Heavy.otf');
+}
+@font-face {
+    font-family: Akrobat;
+    src: local("Akrobat"), url('../fonts/Akrobat-Bold.otf');
+}
+
+body {
+    width: 1160px;
+    height: 666px;
+    padding: 40px 60px;
+    background-image: linear-gradient(to bottom, #3cadc1, #0562a1);
+}
+
+/** HEADER **/
+.header {
+    width: 1160px;
+    height: 150px;
+}
+.team {
+    float: left;
+    width: 450px;
+    padding-top: 70px;
+    font-family: SFUIText;
+    font-size: 37px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-align: left;
+    color: #ffffff;
+}
+.team.one {
+    text-align: left;
+}
+.team.two {
+    text-align: right;
+}
+.total-score {
+    float: left;
+    width: 260px;
+    text-align: center;
+}
+.score-block {
+    width: 160px;
+    height: 90px;
+    object-fit: contain;
+    border-radius: 12px;
+    background-image: linear-gradient(to bottom, #303030, #000000);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    border: solid 12px #122c70;
+    text-align: center;
+    font-family: Matricha;
+    font-size: 40px;
+    color: #ffffff;
+}
+.total-score .score-block {
+    margin: 0 auto;
+}
+/** END HEADER **/
+
+/** CONTENT **/
+.content {
+    width: 1160px;
+    height: 400px;
+}
+.score-column {
+    float: left;
+    width: 200px;
+    text-align: center;
+}
+.mistake-column {
+    float: left;
+    width: 160px;
+    margin: 0 10px;
+    text-align: center;
+}
+.answers-column {
+    float: left;
+    width: 390px;
+}
+.round-block {
+    width: 100px;
+    height: 160px;
+    border-radius: 16px;
+    background-image: linear-gradient(to bottom, #d0021b, #aa0217);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    border: solid 1.6px #6a4901;
+    text-align: center;
+    margin: 0 auto;
+}
+.round-block .number {
+    font-family: SFUIText;
+    font-size: 140px;
+    font-weight: 900;
+    color: #fdb309;
+}
+.mistake-block {
+
+}
+.mistake {
+
+}
+.answer {
+    height: 53px;
+    font-family: Akrobat;
+    font-size: 44px;
+    font-weight: bold;
+    letter-spacing: 3.1px;
+    text-align: left;
+    color: #ffffff;
+}
+.answer .percent {
+    float: right;
+}
+.score-column.right .score-block {
+    float: right;
+}
+/** END CONTENT **/
+
+/** FOOTER **/
+.footer {
+    width: 1160px;
+    height: 80px;
+    padding: 10px 0;
+}
+.footer .logo {
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+}
+/** END FOOTER **/

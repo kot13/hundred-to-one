@@ -5,7 +5,11 @@ const url = require('url');
 let board, panel;
 
 function createWindow () {
-  board = new BrowserWindow({width: 1280, height: 768});
+  board = new BrowserWindow({
+    width: 1280,
+    height: 768,
+    resizable: false
+  });
   board.loadURL(url.format({
     pathname: path.join(__dirname, 'layouts/board.html'),
     protocol: 'file:',

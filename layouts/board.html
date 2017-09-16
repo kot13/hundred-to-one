@@ -3,11 +3,74 @@
   <head>
     <meta charset="UTF-8">
     <title>Табло</title>
+    <link rel="stylesheet" href="../assets/css/normalize.css">
     <link rel="stylesheet" href="../assets/css/board.css">
   </head>
   <body>
-    <h1>Табло</h1>
-    <p id="view"></p>
+    <div class="header">
+      <div class="team one">Смельчаки UCP</div>
+      <div class="total-score">
+        <div class="score-block">0</div>
+      </div>
+      <div class="team two">Партнёры UCP</div>
+    </div>
+    <div class="content">
+      <div class="score-column left">
+        <div class="score-block">0</div>
+      </div>
+      <div class="mistake-column left">
+        <div class="round-block">
+          <div class="number">1</div>
+        </div>
+        <div class="mistake-block">
+          <div class="mistake"></div>
+          <div class="mistake"></div>
+          <div class="mistake"></div>
+        </div>
+      </div>
+      <div class="answers-column">
+        <div class="answer">
+          Трололо
+          <span class="percent">30</span>
+        </div>
+        <div class="answer">
+          Трололо
+          <span class="percent">30</span>
+        </div>
+        <div class="answer">
+          Трололо
+          <span class="percent">30</span>
+        </div>
+        <div class="answer">
+          Трололо
+          <span class="percent">30</span>
+        </div>
+        <div class="answer">
+          Трололо
+          <span class="percent">30</span>
+        </div>
+        <div class="answer">
+          Трололо
+          <span class="percent">30</span>
+        </div>
+      </div>
+      <div class="mistake-column right">
+        <div class="round-block">
+          <div class="number">1</div>
+        </div>
+        <div class="mistake-block">
+          <div class="mistake"></div>
+          <div class="mistake"></div>
+          <div class="mistake"></div>
+        </div>
+      </div>
+      <div class="score-column right">
+        <div class="score-block">0</div>
+      </div>
+    </div>
+    <div class="footer">
+      <img src="../assets/images/logo.png" class="logo">
+    </div>
   </body>
 
   <script>
