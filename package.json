@@ -1,0 +1,14 @@
+{
+  "name": "handred-to-one",
+  "version": "1.0.0",
+  "description": "Табло и панель управления для игры \"100 к 1\"",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/kot13/hundred-to-one",
+  "author": "kot_tdf@mail.ru",
+  "devDependencies": {
+    "electron": "~1.7.6"
+  }
+}
