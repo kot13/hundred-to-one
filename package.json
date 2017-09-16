@@ -4,11 +4,13 @@
   "description": "Табло и панель управления для игры \"100 к 1\"",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-packager ./ handred-to-one --overwrite --platform=darwin --arch=x64 --prune=true --out=release-builds"
   },
   "repository": "https://github.com/kot13/hundred-to-one",
   "author": "kot_tdf@mail.ru",
   "devDependencies": {
-    "electron": "~1.7.6"
+    "electron": "~1.7.6",
+    "electron-packager": "^9.1.0"
   }
 }
