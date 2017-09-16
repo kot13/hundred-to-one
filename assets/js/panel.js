@@ -1,4 +1,3 @@
-const BrowserWindow = require('electron').remote.BrowserWindow;
 const {ipcRenderer} = require('electron');
 
 const btn = document.getElementById('button');
