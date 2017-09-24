@@ -1,6 +1,7 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
 const url = require('url');
+let store = require('./assets/js/store');
 
 let board, panel;
 
@@ -15,7 +16,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  // board.webContents.openDevTools();
+  board.webContents.openDevTools();
   board.on('closed', function () {
     board = null;
   });
@@ -26,7 +27,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  // panel.webContents.openDevTools();
+  panel.webContents.openDevTools();
   panel.on('closed', function () {
     panel = null
   })
@@ -47,5 +48,6 @@ app.on('activate', function () {
 });
 
 ipcMain.on('asynchronous-message', (event, arg) => {
-  board.send('asynchronous-reply', 'pong');
+  store.state.rounds[0].answers[0].visible = true;
+  board.send('asynchronous-reply', store.state);
 });

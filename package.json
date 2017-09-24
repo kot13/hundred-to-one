@@ -12,5 +12,8 @@
   "devDependencies": {
     "electron": "~1.7.6",
     "electron-packager": "^9.1.0"
+  },
+  "dependencies": {
+    "handlebars": "^4.0.10"
   }
 }

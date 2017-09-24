@@ -7,20 +7,23 @@
     <link rel="stylesheet" href="../assets/css/board.css">
   </head>
   <body>
+  <div id="app"></div>
+
+  <script id="board-template" type="text/x-handlebars-template">
     <div class="header">
-      <div class="team one">Смельчаки UCP</div>
+      <div class="team one">{{ teams.one }}</div>
       <div class="total-score">
-        <div class="score-block">0</div>
+        <div class="score-block">{{ score.round }}</div>
       </div>
-      <div class="team two">Партнёры UCP</div>
+      <div class="team two">{{ teams.two }}</div>
     </div>
     <div class="content">
       <div class="score-column left">
-        <div class="score-block">0</div>
+        <div class="score-block">{{ score.one }}</div>
       </div>
       <div class="mistake-column left">
         <div class="round-block">
-          <div class="number">1</div>
+          <div class="number">{{ currentRound }}</div>
         </div>
         <div class="mistake-block">
           <div class="mistake"></div>
@@ -29,34 +32,21 @@
         </div>
       </div>
       <div class="answers-column">
+        {{#each rounds.0.answers}}
+        {{#if visible}}
         <div class="answer">
-          Трололо
-          <span class="percent">30</span>
+          {{ title }}
+          <span class="percent">{{ cost }}</span>
         </div>
+        {{else}}
         <div class="answer">
-          Трололо
-          <span class="percent">30</span>
         </div>
-        <div class="answer">
-          Трололо
-          <span class="percent">30</span>
-        </div>
-        <div class="answer">
-          Трололо
-          <span class="percent">30</span>
-        </div>
-        <div class="answer">
-          Трололо
-          <span class="percent">30</span>
-        </div>
-        <div class="answer">
-          Трололо
-          <span class="percent">30</span>
-        </div>
+        {{/if}}
+        {{/each}}
       </div>
       <div class="mistake-column right">
         <div class="round-block">
-          <div class="number">1</div>
+          <div class="number">{{ currentRound }}</div>
         </div>
         <div class="mistake-block">
           <div class="mistake"></div>
@@ -65,15 +55,16 @@
         </div>
       </div>
       <div class="score-column right">
-        <div class="score-block">0</div>
+        <div class="score-block">{{ score.two }}</div>
       </div>
     </div>
     <div class="footer">
       <img src="../assets/images/logo.png" class="logo">
     </div>
-  </body>
+  </script>
 
   <script>
     require('../assets/js/board.js')
   </script>
+  </body>
 </html>
