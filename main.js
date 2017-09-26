@@ -16,7 +16,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  board.webContents.openDevTools();
+  // board.webContents.openDevTools();
   board.on('closed', function () {
     board = null;
   });
@@ -27,7 +27,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  panel.webContents.openDevTools();
+  // panel.webContents.openDevTools();
   panel.on('closed', function () {
     panel = null
   })
@@ -48,6 +48,15 @@ app.on('activate', function () {
 });
 
 ipcMain.on('asynchronous-message', (event, arg) => {
-  store.state.rounds[0].answers[0].visible = true;
-  board.send('asynchronous-reply', store.state);
+  switch (arg) {
+    case 'ping':
+      store.state.rounds[0].answers[0].visible = true;
+      board.send('asynchronous-reply', 'ping');
+      break;
+
+    case 'ping2':
+      // store.state.rounds[0].answers[0].visible = true;
+      board.send('asynchronous-reply', 'ping2');
+      break;
+  }
 });

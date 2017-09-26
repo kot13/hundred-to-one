@@ -106,16 +106,43 @@ body {
     line-height: 180px;
 }
 .mistake-block {
-
+    margin-top: 30px;
 }
 .mistake {
-
+    position: relative;
+    width: 160px;
+    height: 75px;
+}
+.mistake .mistake-off, .mistake .mistake-on {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+.mistake .mistake-off {
+    margin-left: -55px;
+    margin-top: -30px;
+}
+.mistake .mistake-on {
+    margin-left: -82px;
+    margin-top: -60px;
+}
+.mistake .mistake-off{
+    display: block;
+}
+.mistake .mistake-on {
+    display: none;
+}
+.mistake.on .mistake-off{
+    display: none;
+}
+.mistake.on .mistake-on {
+    display: block;
 }
 
 .flip-container {
     perspective: 1000;
     position: relative;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .flip-container.hover .flipper {

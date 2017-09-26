@@ -12,12 +12,20 @@ let audioWrongAnswer = document.getElementById('audio-wrong-answer');
 
 App.innerHTML = html;
 
-ipcRenderer.on('asynchronous-reply', (event, state) => {
-    console.log(event);
+ipcRenderer.on('asynchronous-reply', (event, arg) => {
+    switch (arg) {
+        case 'ping':
+            let a1 = document.getElementById('answer-0');
+            a1.className += ' hover';
+            audioOpenAnswer.play();
+            break;
 
-    let a1 = document.getElementById('answer-0');
-    a1.className += ' hover';
-    audioOpenAnswer.play();
+        case 'ping2':
+            let a2 = document.getElementById('mistake-one-1');
+            a2.className += ' on';
+            audioWrongAnswer.play();
+            break;
+    }
 
     // html          = template(state);
     // App.innerHTML = html;
