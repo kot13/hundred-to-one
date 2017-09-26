@@ -33,15 +33,19 @@
       </div>
       <div class="answers-column">
         {{#each rounds.0.answers}}
-        {{#if visible}}
-        <div class="answer">
-          {{ title }}
-          <span class="percent">{{ cost }}</span>
+         <div class="flip-container" id="answer-{{@index}}">
+          <div class="flipper">
+            <div class="front">
+              <img src="../assets/images/answer-{{@index}}.png">
+            </div>
+            <div class="back">
+              <div class="answer">
+                {{ title }}
+                <span class="percent">{{ cost }}</span>
+              </div>
+            </div>
+          </div>
         </div>
-        {{else}}
-        <div class="answer">
-        </div>
-        {{/if}}
         {{/each}}
       </div>
       <div class="mistake-column right">
@@ -62,6 +66,9 @@
       <img src="../assets/images/logo.png" class="logo">
     </div>
   </script>
+
+  <audio id="audio-open-answer" src="../assets/sounds/open_answer.mp3"></audio>
+  <audio id="audio-wrong-answer" src="../assets/sounds/wrong_answer.mp3"></audio>
 
   <script>
     require('../assets/js/board.js')
