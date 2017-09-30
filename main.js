@@ -16,7 +16,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  // board.webContents.openDevTools();
+  board.webContents.openDevTools();
   board.on('closed', function () {
     board = null;
   });
@@ -27,7 +27,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  // panel.webContents.openDevTools();
+  panel.webContents.openDevTools();
   panel.on('closed', function () {
     panel = null
   })
@@ -49,14 +49,34 @@ app.on('activate', function () {
 
 ipcMain.on('asynchronous-message', (event, arg) => {
   switch (arg) {
-    case 'ping':
-      store.state.rounds[0].answers[0].visible = true;
-      board.send('asynchronous-reply', 'ping');
+    case 'open-answer-1':
+      board.send('asynchronous-reply', {
+        event: arg,
+        state: store.state
+      });
       break;
 
-    case 'ping2':
-      // store.state.rounds[0].answers[0].visible = true;
-      board.send('asynchronous-reply', 'ping2');
+    case 'on-mistake-one-1':
+      board.send('asynchronous-reply', {
+        event: arg,
+        state: store.state
+      });
+      break;
+
+    case 'next-round':
+      if (store.state.currentRound > 4) {
+        break;
+      }
+
+      if (store.state.currentRound != 4) {
+        store.state.roundAnswers = store.state.rounds[store.state.currentRound].answers;
+      }
+      store.state.currentRound++;
+
+      board.send('asynchronous-reply', {
+        event: arg,
+        state: store.state
+      });
       break;
   }
 });

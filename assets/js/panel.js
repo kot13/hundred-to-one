@@ -1,12 +1,17 @@
 const {ipcRenderer} = require('electron');
 
-const btn = document.getElementById('button');
-const btn2 = document.getElementById('button2');
+const openAnswer1   = document.getElementById('open-answer-1');
+const onMistakeOne1 = document.getElementById('on-mistake-one-1');
+const nextRound     = document.getElementById('next-round');
 
-btn.addEventListener('click', function (event) {
-    ipcRenderer.send('asynchronous-message', 'ping');
+openAnswer1.addEventListener('click', function (event) {
+    ipcRenderer.send('asynchronous-message', 'open-answer-1');
 });
 
-btn2.addEventListener('click', function (event) {
-    ipcRenderer.send('asynchronous-message', 'ping2');
+onMistakeOne1.addEventListener('click', function (event) {
+    ipcRenderer.send('asynchronous-message', 'on-mistake-one-1');
+});
+
+nextRound.addEventListener('click', function (event) {
+    ipcRenderer.send('asynchronous-message', 'next-round');
 });
