@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Панель управления</title>
-    <link rel="stylesheet" href="../assets/css/semantic.min.css">
-    <link rel="stylesheet" href="../assets/css/panel.css">
-  </head>
-  <body>
-    <div class="ui grid">
-      <div class="sixteen wide column">
-        <div class="ui secondary pointing menu">
-          <a class="active item">
-            1 раунд
-          </a>
-          <a class="item">
-            2 раунд
-          </a>
-          <a class="item">
-            3 раунд
-          </a>
-          <a class="item">
-            4 раунд
-          </a>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <title>Панель управления</title>
+  <link rel="stylesheet" href="../assets/css/photon.min.css">
+  <link rel="stylesheet" href="../assets/css/panel.css">
+</head>
+<body>
+  <div class="window">
+    <header class="toolbar toolbar-header">
+      <div class="toolbar-actions">
+        <button class="btn btn-default" id="open-team-one">
+          Показать команду 1
+        </button>
+        <button class="btn btn-default" id="open-team-two">
+          Показать команду 2
+        </button>
+
+        <button class="btn btn-default pull-right">
+          <span class="icon icon-cog"></span>
+        </button>
       </div>
+    </header>
+
+    <div class="window-content">
+      <div class="padded-more" id="content"></div>
     </div>
 
-    <button class="ui button" id="open-team-one">Показать команду 1</button>
-    <button class="ui button" id="open-team-two">Показать команду 2</button>
+    <footer class="toolbar toolbar-footer">
+      <div class="toolbar-actions">
+        <button class="btn btn-primary pull-right" id="next-round">
+          Следующий раунд
+        </button>
+      </div>
+    </footer>
+  </div>
 
-    <button class="ui button" id="open-answer-1">Гори!</button>
-    <button class="ui button" id="on-mistake-one-1">Сияй!</button>
-    <button class="ui button" id="next-round">Двигай!</button>
+  <script id="round-template" type="text/x-handlebars-template">
+    <button class="btn btn-default" id="open-answer-1">Гори!</button>
+    <button class="btn btn-default" id="on-mistake-one-1">Сияй!</button>
+  </script>
 
-    <script>
-      require('../assets/js/panel.js')
-    </script>
-  </body>
+  <script>
+    require('../assets/js/panel.js')
+  </script>
+</body>
 </html>

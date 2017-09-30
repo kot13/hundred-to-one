@@ -1,4 +1,10 @@
 const {ipcRenderer} = require('electron');
+const Handlebars = require('handlebars');
+
+const content     = document.getElementById('content');
+const roundSource = document.getElementById('round-template').innerHTML;
+let template      = Handlebars.compile(roundSource);
+content.innerHTML = template();
 
 const openTeamOne   = document.getElementById('open-team-one');
 const openTeamTwo   = document.getElementById('open-team-two');
