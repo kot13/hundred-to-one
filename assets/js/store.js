@@ -1,8 +1,14 @@
 let state = {
     currentRound: 1,
     teams: {
-        one: "Смельчаки UCP",
-        two: "Партнёры UCP"
+        one: {
+            title: "Смельчаки UCP",
+            visible: false
+        },
+        two: {
+            title: "Партнёры UCP",
+            visible: false
+        }
     },
     score: {
         one: 0,

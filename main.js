@@ -49,13 +49,11 @@ app.on('activate', function () {
 
 ipcMain.on('asynchronous-message', (event, arg) => {
   switch (arg) {
+    case 'open-team-one':
+      store.state.teams.one.visible = true;
+    case 'open-team-two':
+      store.state.teams.two.visible = true;
     case 'open-answer-1':
-      board.send('asynchronous-reply', {
-        event: arg,
-        state: store.state
-      });
-      break;
-
     case 'on-mistake-one-1':
       board.send('asynchronous-reply', {
         event: arg,

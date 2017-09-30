@@ -28,6 +28,18 @@ App.innerHTML = html;
 
 ipcRenderer.on('asynchronous-reply', (event, arg) => {
     switch (arg.event) {
+        case 'open-team-one':
+            let teamOne = document.getElementById('team-one');
+            teamOne.className += ' visible';
+            audioOpenAnswer.play();
+            break;
+
+        case 'open-team-two':
+            let teamTwo = document.getElementById('team-two');
+            teamTwo.className += ' visible';
+            audioOpenAnswer.play();
+            break;
+
         case 'open-answer-1':
             let a1 = document.getElementById('answer-0');
             a1.className += ' hover';
