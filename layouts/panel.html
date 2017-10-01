@@ -17,14 +17,14 @@
           Показать команду 2
         </button>
 
-        <button class="btn btn-default pull-right">
+        <button class="btn btn-default pull-right" id="open-settings">
           <span class="icon icon-cog"></span>
         </button>
       </div>
     </header>
 
     <div class="window-content">
-      <div class="padded-more" id="content"></div>
+      <div id="content"></div>
     </div>
 
     <footer class="toolbar toolbar-footer">
@@ -37,8 +37,181 @@
   </div>
 
   <script id="round-template" type="text/x-handlebars-template">
-    <button class="btn btn-default" id="open-answer-1">Гори!</button>
-    <button class="btn btn-default" id="on-mistake-one-1">Сияй!</button>
+    <div class="pane-group">
+      <div class="pane">
+        <div class="mistake-block">
+          <button class="btn btn-large btn-negative" id="on-mistake-one-0">Ошибка 1</button>
+          <button class="btn btn-large btn-negative" id="on-mistake-one-1">Ошибка 2</button>
+          <button class="btn btn-large btn-negative" id="on-mistake-one-2">Ошибка 3</button>
+
+          <button class="btn btn-primary" id="win-one">
+            Очки команды 1
+          </button>
+        </div>
+      </div>
+      <div class="pane">
+        <ul class="list-group">
+          {{#each roundAnswers}}
+          <li class="list-group-item">
+            <div class="media-body pull-left">
+              <strong>{{title}}</strong>
+            </div>
+            <button class="btn btn-default pull-right" id="open-answer-{{@index}}">Открыть</button>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="pane">
+        <div class="mistake-block">
+          <button class="btn btn-large btn-negative" id="on-mistake-two-0">Ошибка 1</button>
+          <button class="btn btn-large btn-negative" id="on-mistake-two-1">Ошибка 2</button>
+          <button class="btn btn-large btn-negative" id="on-mistake-two-2">Ошибка 3</button>
+
+          <button class="btn btn-primary" id="win-two">
+            Очки команды 2
+          </button>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script id="final-template" type="text/x-handlebars-template">
+    <div class="pane-group">
+      <div class="pane">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-0" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-0" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-0" data-index="0">Открыть</button>
+          </li>
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-1" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-1" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-1" data-index="1">Открыть</button>
+          </li>
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-2" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-2" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-2" data-index="2">Открыть</button>
+          </li>
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-3" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-3" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-3" data-index="3">Открыть</button>
+          </li>
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-4" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-4" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-4" data-index="4">Открыть</button>
+          </li>
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-5" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-5" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-5" data-index="5">Открыть</button>
+          </li>
+        </ul>
+
+        <button class="btn btn-primary close-all" id="close-one">Скрыть все</button>
+        <button class="btn btn-primary close-all" id="open-one">Показать все</button>
+      </div>
+      <div class="pane">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-6" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-6" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-6" data-index="6">Открыть</button>
+          </li>
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-7" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-7" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-7" data-index="7">Открыть</button>
+          </li>
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-8" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-8" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-8" data-index="8">Открыть</button>
+          </li>
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-9" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-9" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-9" data-index="9">Открыть</button>
+          </li>
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-10" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-10" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-10" data-index="10">Открыть</button>
+          </li>
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-11" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-11" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-11" data-index="11">Открыть</button>
+          </li>
+        </ul>
+
+        <button class="btn btn-primary close-all" id="close-two">Скрыть все</button>
+        <button class="btn btn-primary close-all" id="open-two">Показать все</button>
+      </div>
+    </div>
+  </script>
+
+
+  <script id="settings-template" type="text/x-handlebars-template">
+    <form>
+      <div class="pane-group">
+        <div class="pane">
+          <div class="padded-more">
+            <strong>Одиночная игра</strong>
+          </div>
+          <div class="padded-more">
+          {{#each rounds.0.answers}}
+          <div class="form-group">
+            <input type="text" class="form-control answer-title" value="{{title}}">
+            <input type="text" class="form-control answer-cost" value="{{cost}}">
+          </div>
+          {{/each}}
+          </div>
+        </div>
+        <div class="pane">
+          <div class="padded-more">
+            <strong>Двойная игра</strong>
+          </div>
+          <div class="padded-more">
+            {{#each rounds.1.answers}}
+            <div class="form-group">
+              <input type="text" class="form-control answer-title" value="{{title}}">
+              <input type="text" class="form-control answer-cost" value="{{cost}}">
+            </div>
+            {{/each}}
+          </div>
+        </div>
+        <div class="pane">
+          <div class="padded-more">
+            <strong>Тройная игра</strong>
+          </div>
+          <div class="padded-more">
+            {{#each rounds.2.answers}}
+            <div class="form-group">
+              <input type="text" class="form-control answer-title" value="{{title}}">
+              <input type="text" class="form-control answer-cost" value="{{cost}}">
+            </div>
+            {{/each}}
+          </div>
+        </div>
+        <div class="pane">
+          <div class="padded-more">
+            <strong>Игра наоборот</strong>
+          </div>
+          <div class="padded-more">
+            {{#each rounds.3.answers}}
+            <div class="form-group">
+              <input type="text" class="form-control answer-title" value="{{title}}">
+              <input type="text" class="form-control answer-cost" value="{{cost}}">
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </form>
   </script>
 
   <script>

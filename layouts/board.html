@@ -13,19 +13,19 @@
     <div class="header">
       <div class="team one{{#if teams.one.visible}} visible{{/if}}" id="team-one">{{teams.one.title}}</div>
       <div class="total-score">
-        <div class="score-block">{{ score.round }}</div>
+        <div class="score-block" id="round-score">{{ score.round }}</div>
       </div>
       <div class="team two{{#if teams.one.visible}} visible{{/if}}" id="team-two">{{teams.two.title}}</div>
     </div>
     <div class="content">
       <div class="score-column left">
-        <div class="score-block">{{ score.one }}</div>
+        <div class="score-block" id="score-one">{{ score.one }}</div>
       </div>
       <div id="game-field">
         {{>gameField}}
       </div>
       <div class="score-column right">
-        <div class="score-block">{{ score.two }}</div>
+        <div class="score-block" id="score-two">{{ score.two }}</div>
       </div>
     </div>
     <div class="footer">
@@ -39,15 +39,15 @@
         <div class="number">{{ currentRound }}</div>
       </div>
       <div class="mistake-block">
+        <div class="mistake" id="mistake-one-0">
+          <img src="../assets/images/mistake.png" class="mistake-off">
+          <img src="../assets/images/mistake-on.png" class="mistake-on">
+        </div>
         <div class="mistake" id="mistake-one-1">
           <img src="../assets/images/mistake.png" class="mistake-off">
           <img src="../assets/images/mistake-on.png" class="mistake-on">
         </div>
         <div class="mistake" id="mistake-one-2">
-          <img src="../assets/images/mistake.png" class="mistake-off">
-          <img src="../assets/images/mistake-on.png" class="mistake-on">
-        </div>
-        <div class="mistake" id="mistake-one-3">
           <img src="../assets/images/mistake.png" class="mistake-off">
           <img src="../assets/images/mistake-on.png" class="mistake-on">
         </div>
@@ -75,15 +75,15 @@
         <div class="number">{{ currentRound }}</div>
       </div>
       <div class="mistake-block">
+        <div class="mistake" id="mistake-two-0">
+          <img src="../assets/images/mistake.png" class="mistake-off">
+          <img src="../assets/images/mistake-on.png" class="mistake-on">
+        </div>
         <div class="mistake" id="mistake-two-1">
           <img src="../assets/images/mistake.png" class="mistake-off">
           <img src="../assets/images/mistake-on.png" class="mistake-on">
         </div>
         <div class="mistake" id="mistake-two-2">
-          <img src="../assets/images/mistake.png" class="mistake-off">
-          <img src="../assets/images/mistake-on.png" class="mistake-on">
-        </div>
-        <div class="mistake" id="mistake-two-3">
           <img src="../assets/images/mistake.png" class="mistake-off">
           <img src="../assets/images/mistake-on.png" class="mistake-on">
         </div>
@@ -94,40 +94,36 @@
   <script id="final-template" type="text/x-handlebars-template">
     <div class="left-column">
       {{#for 0 6 1}}
-      <div class="flip-container final" id="answer-one-{{this}}">
+      <div class="flip-container final" id="answer-{{this}}">
         <div class="flipper">
           <div class="front final">
             <img src="../assets/images/final.png">
           </div>
           <div class="back final">
-            <div class="final-answer">
-              Трололо
-            </div>
+            <div class="final-answer" id="answer-title-{{this}}"></div>
           </div>
         </div>
       </div>
       {{/for}}
       <div class="summa">
-        Сумма:
+        Сумма: <span id="summa-one"></span>
       </div>
     </div>
     <div class="right-column">
-      {{#for 0 6 1}}
-      <div class="flip-container final" id="answer-two-{{this}}">
+      {{#for 6 12 1}}
+      <div class="flip-container final" id="answer-{{this}}">
         <div class="flipper">
           <div class="front final">
             <img src="../assets/images/final.png">
           </div>
           <div class="back final">
-            <div class="final-answer">
-              Трололо
-            </div>
+            <div class="final-answer" id="answer-title-{{this}}"></div>
           </div>
         </div>
       </div>
       {{/for}}
       <div class="summa">
-        Сумма:
+        Сумма: <span id="summa-two"></span>
       </div>
     </div>
   </script>

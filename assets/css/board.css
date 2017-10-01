@@ -224,6 +224,10 @@ body {
     width: 354px;
     height: 56px;
 }
+.final .percent {
+    float: right;
+}
+
 .left-column{
     width: 360px;
     float: left;
