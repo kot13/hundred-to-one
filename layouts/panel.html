@@ -45,7 +45,7 @@
           <button class="btn btn-large btn-negative" id="on-mistake-one-2">Ошибка 3</button>
 
           <button class="btn btn-primary" id="win-one">
-            Очки команды 1
+            Начислить очки команде 1
           </button>
         </div>
       </div>
@@ -68,7 +68,7 @@
           <button class="btn btn-large btn-negative" id="on-mistake-two-2">Ошибка 3</button>
 
           <button class="btn btn-primary" id="win-two">
-            Очки команды 2
+            Начислить очки команде 2
           </button>
         </div>
       </div>
@@ -104,11 +104,6 @@
             <input type="text" class="form-control final-answer-cost" id="input-answer-cost-4" value="">
             <button class="btn btn-default pull-right final-answer-open" id="open-answer-4" data-index="4">Открыть</button>
           </li>
-          <li class="list-group-item">
-            <input type="text" class="form-control final-answer-title" id="input-answer-title-5" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-5" value="">
-            <button class="btn btn-default pull-right final-answer-open" id="open-answer-5" data-index="5">Открыть</button>
-          </li>
         </ul>
 
         <button class="btn btn-primary close-all" id="close-one">Скрыть все</button>
@@ -116,6 +111,11 @@
       </div>
       <div class="pane">
         <ul class="list-group">
+          <li class="list-group-item">
+            <input type="text" class="form-control final-answer-title" id="input-answer-title-5" value="">
+            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-5" value="">
+            <button class="btn btn-default pull-right final-answer-open" id="open-answer-5" data-index="5">Открыть</button>
+          </li>
           <li class="list-group-item">
             <input type="text" class="form-control final-answer-title" id="input-answer-title-6" value="">
             <input type="text" class="form-control final-answer-cost" id="input-answer-cost-6" value="">
@@ -136,16 +136,6 @@
             <input type="text" class="form-control final-answer-cost" id="input-answer-cost-9" value="">
             <button class="btn btn-default pull-right final-answer-open" id="open-answer-9" data-index="9">Открыть</button>
           </li>
-          <li class="list-group-item">
-            <input type="text" class="form-control final-answer-title" id="input-answer-title-10" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-10" value="">
-            <button class="btn btn-default pull-right final-answer-open" id="open-answer-10" data-index="10">Открыть</button>
-          </li>
-          <li class="list-group-item">
-            <input type="text" class="form-control final-answer-title" id="input-answer-title-11" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-11" value="">
-            <button class="btn btn-default pull-right final-answer-open" id="open-answer-11" data-index="11">Открыть</button>
-          </li>
         </ul>
 
         <button class="btn btn-primary close-all" id="close-two">Скрыть все</button>
@@ -154,21 +144,24 @@
     </div>
   </script>
 
-
   <script id="settings-template" type="text/x-handlebars-template">
-    <form>
+    <div id="settings-form">
       <div class="pane-group">
         <div class="pane">
           <div class="padded-more">
             <strong>Одиночная игра</strong>
           </div>
           <div class="padded-more">
-          {{#each rounds.0.answers}}
-          <div class="form-group">
-            <input type="text" class="form-control answer-title" value="{{title}}">
-            <input type="text" class="form-control answer-cost" value="{{cost}}">
+            {{#each rounds.0.answers}}
+            <div class="form-group">
+              <input type="text" class="form-control answer-title" value="{{title}}" id="answer-title-0-{{@index}}">
+              <input type="text" class="form-control answer-cost" value="{{cost}}" id="answer-cost-0-{{@index}}">
+            </div>
+            {{/each}}
           </div>
-          {{/each}}
+          <div class="padded-more">
+            <button class="btn btn-default" id="cancel">Отменить</button>
+            <button class="btn btn-primary" id="save">Сохранить</button>
           </div>
         </div>
         <div class="pane">
@@ -178,8 +171,8 @@
           <div class="padded-more">
             {{#each rounds.1.answers}}
             <div class="form-group">
-              <input type="text" class="form-control answer-title" value="{{title}}">
-              <input type="text" class="form-control answer-cost" value="{{cost}}">
+              <input type="text" class="form-control answer-title" value="{{title}}" id="answer-title-1-{{@index}}">
+              <input type="text" class="form-control answer-cost" value="{{cost}}" id="answer-cost-1-{{@index}}">
             </div>
             {{/each}}
           </div>
@@ -191,8 +184,8 @@
           <div class="padded-more">
             {{#each rounds.2.answers}}
             <div class="form-group">
-              <input type="text" class="form-control answer-title" value="{{title}}">
-              <input type="text" class="form-control answer-cost" value="{{cost}}">
+              <input type="text" class="form-control answer-title" value="{{title}}" id="answer-title-2-{{@index}}">
+              <input type="text" class="form-control answer-cost" value="{{cost}}" id="answer-cost-2-{{@index}}">
             </div>
             {{/each}}
           </div>
@@ -204,14 +197,14 @@
           <div class="padded-more">
             {{#each rounds.3.answers}}
             <div class="form-group">
-              <input type="text" class="form-control answer-title" value="{{title}}">
-              <input type="text" class="form-control answer-cost" value="{{cost}}">
+              <input type="text" class="form-control answer-title" value="{{title}}" id="answer-title-3-{{@index}}">
+              <input type="text" class="form-control answer-cost" value="{{cost}}" id="answer-cost-3-{{@index}}">
             </div>
             {{/each}}
           </div>
         </div>
       </div>
-    </form>
+    </div>
   </script>
 
   <script>

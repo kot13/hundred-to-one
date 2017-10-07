@@ -11,4 +11,5 @@ $ npm start
 ## Build release
 ```
 $ npm run build
+$ npm run build-win ## build for Windows
 ```

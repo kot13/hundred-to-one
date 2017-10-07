@@ -1,13 +1,16 @@
 const {ipcRenderer} = require('electron');
-const Handlebars = require('handlebars');
-let store = require('./store');
+const Handlebars    = require('handlebars');
+const storage       = require('electron-json-storage');
+const store         = require('./store');
 
 const content        = document.getElementById('content');
 const roundSource    = document.getElementById('round-template').innerHTML;
 const finalSource    = document.getElementById('final-template').innerHTML;
 const settingsSource = document.getElementById('settings-template').innerHTML;
 let template         = Handlebars.compile(roundSource);
-content.innerHTML    = template(store.state);
+
+let state = store.getState();
+content.innerHTML    = template(state);
 
 const openTeamOne  = document.getElementById('open-team-one');
 const openTeamTwo  = document.getElementById('open-team-two');
@@ -31,29 +34,64 @@ openTeamTwo.addEventListener('click', function (event) {
 
 openSettings.addEventListener('click', function (event) {
     let template      = Handlebars.compile(settingsSource);
-    content.innerHTML = template(store.state);
+    content.innerHTML = template(store.getState());
+
+    document.getElementById('cancel').addEventListener('click', function (event) {
+        template          = Handlebars.compile(roundSource);
+        content.innerHTML = template(store.getState());
+        init();
+    });
+
+    document.getElementById('save').addEventListener('click', function (event) {
+        var state = store.getState();
+        state.rounds.forEach(function(round, roundIndex) {
+            round.answers.forEach(function(answer, answerIndex) {
+                state.rounds[roundIndex].answers[answerIndex].title   = document.getElementById('answer-title-'+roundIndex+'-'+answerIndex).value;
+                state.rounds[roundIndex].answers[answerIndex].cost    = document.getElementById('answer-cost-'+roundIndex+'-'+answerIndex).value;
+                state.rounds[roundIndex].answers[answerIndex].visible = false;
+            });
+        });
+
+        store.setState(state);
+
+        storage.set('hundred-to-one', state.rounds, function(error) {
+            if (error) throw error;
+        });
+
+        template          = Handlebars.compile(roundSource);
+        content.innerHTML = template(state);
+        init();
+    });
 });
 
 nextRound.addEventListener('click', function (event) {
-    if (store.state.currentRound != 4) {
-        store.state.roundAnswers = store.state.rounds[store.state.currentRound].answers;
-    }
-    store.state.currentRound++;
-
-    if (store.state.currentRound != 5) {
-        template          = Handlebars.compile(roundSource);
-        content.innerHTML = template(store.state);
-        init();
-    } else {
-        template          = Handlebars.compile(finalSource);
-        content.innerHTML = template(store.state);
-        finalInit();
-    }
-
     ipcRenderer.send('asynchronous-message', {
         cmd: 'next-round'
     });
 });
+
+ipcRenderer.on('asynchronous-reply', (event, data) => {
+    switch (data.event) {
+        case 'next-round':
+            if (data.state.currentRound != 5) {
+                template          = Handlebars.compile(roundSource);
+                content.innerHTML = template(data.state);
+                init();
+            } else {
+                template          = Handlebars.compile(finalSource);
+                content.innerHTML = template(data.state);
+                finalInit();
+            }
+            break;
+
+        case 'update-state':
+            var html = template(data.state);
+            content.innerHTML = html;
+            init();
+            break;
+    }
+});
+
 
 function init() {
     document.getElementById('open-answer-0').addEventListener('click', function (event) {

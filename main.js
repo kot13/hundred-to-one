@@ -1,15 +1,35 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
 const url = require('url');
-let store = require('./assets/js/store');
+const os = require('os');
+const store = require('./assets/js/store');
+const storage = require('electron-json-storage');
 
 let board, panel;
+
+storage.setDataPath(os.tmpdir());
+
+function loadSettings() {
+  storage.get('hundred-to-one', function(error, data) {
+    if (error) {
+      throw error;
+    }
+
+    if (Object.keys(data).length != 0) {
+      var state = store.getState();
+      state.rounds = data;
+      state.roundAnswers = state.rounds[0].answers;
+
+      store.setState(state);
+    }
+  });
+}
 
 function createWindow () {
   board = new BrowserWindow({
     width: 1280,
-    height: 768,
-    resizable: false
+    height: 768
+    // resizable: false
   });
   board.loadURL(url.format({
     pathname: path.join(__dirname, 'layouts/board.html'),
@@ -33,7 +53,7 @@ function createWindow () {
   panel.webContents.openDevTools();
   panel.on('closed', function () {
     panel = null
-  })
+  });
 }
 
 app.on('ready', createWindow);
@@ -53,84 +73,100 @@ app.on('activate', function () {
 ipcMain.on('asynchronous-message', (event, data) => {
   switch (data.cmd) {
     case 'open-team':
-      if (!store.state.teams[data.team].visible) {
-        store.state.teams[data.team].visible = true;
+      var state = store.getState();
+      if (!state.teams[data.team].visible) {
+        state.teams[data.team].visible = true;
+        store.setState(state);
+
         board.send('asynchronous-reply', {
           event: 'open-team-' + data.team,
-          state: store.state
+          state: state
         });
       }
       break;
 
     case 'open-answer':
-      if (store.state.roundAnswers[data.index].visible) {
+      var state = store.getState();
+      if (state.roundAnswers[data.index].visible) {
         break;
       }
-      store.state.roundAnswers[data.index].visible = true;
-      store.state.score.round += store.state.roundAnswers[data.index].cost;
+      state.roundAnswers[data.index].visible = true;
+      state.score.round += Number(state.roundAnswers[data.index].cost);
+      store.setState(state);
+
       board.send('asynchronous-reply', {
         event: 'open-answer-' + data.index,
-        state: store.state
+        state: state
       });
       break;
 
     case 'win':
-      if (store.state.currentRound <= 3) {
-        store.state.score[data.team] += store.state.score.round * store.state.currentRound;
+      var state = store.getState();
+      if (state.currentRound <= 3) {
+        state.score[data.team] += state.score.round * state.currentRound;
       } else {
-        store.state.score[data.team] += store.state.score.round;
+        state.score[data.team] += state.score.round;
       }
-      store.state.score.round = 0;
+      state.score.round = 0;
+      store.setState(state);
 
       board.send('asynchronous-reply', {
         event: 'win-' + data.team,
-        state: store.state
+        state: state
       });
       break;
 
     case 'on-mistake':
       board.send('asynchronous-reply', {
-        event: 'on-mistake-' + data.team + '-' + data.index,
-        state: store.state
+        event: 'on-mistake-' + data.team + '-' + data.index
       });
       break;
 
     case 'next-round':
-      if (store.state.currentRound > 4) {
+      var state = store.getState();
+      if (state.currentRound > 4) {
         break;
       }
 
-      if (store.state.currentRound != 4) {
-        store.state.roundAnswers = store.state.rounds[store.state.currentRound].answers;
+      if (state.currentRound != 4) {
+        state.roundAnswers = state.rounds[state.currentRound].answers;
       }
-      store.state.currentRound++;
+      state.currentRound++;
+      state.score.round = 0;
+      store.setState(state);
 
       board.send('asynchronous-reply', {
         event: 'next-round',
-        state: store.state
+        state: state
+      });
+      panel.send('asynchronous-reply', {
+        event: 'next-round',
+        state: state
       });
       break;
 
     case 'final-open-answer':
-      if (store.state.final.answers[data.index].visible) {
+      var state = store.getState();
+      if (state.final.answers[data.index].visible) {
         break;
       }
 
-      store.state.final.answers[data.index].visible = true;
+      state.final.answers[data.index].visible = true;
       let team = 'one';
       if (data.index <= 5) {
-        store.state.final.score.one += Number(data.cost);
+        state.final.score.one += Number(data.cost);
       } else {
         team = 'two';
-        store.state.final.score.two += Number(data.cost);
+        state.final.score.two += Number(data.cost);
       }
-      store.state.score.round += Number(data.cost);
+      state.score.round += Number(data.cost);
+      store.setState(state);
 
       board.send('asynchronous-reply', {
         event: 'final-open-answer',
         title: data.title,
         cost: data.cost,
-        state: store.state,
+        state: state,
         index: data.index,
         team: team
       });

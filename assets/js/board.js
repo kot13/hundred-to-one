@@ -1,6 +1,6 @@
 const {ipcRenderer} = require('electron');
 const Handlebars = require('handlebars');
-let store = require('./store');
+const store = require('./store');
 
 const App            = document.getElementById('app');
 const sourceTemplate = document.getElementById('board-template').innerHTML;
@@ -19,56 +19,59 @@ Handlebars.registerPartial('gameField', sourceRound);
 
 let template = Handlebars.compile(sourceTemplate);
 
-App.innerHTML = template(store.state);
+App.innerHTML = template(store.getState());
 
 const audioOpenAnswer  = document.getElementById('audio-open-answer');
 const audioWrongAnswer = document.getElementById('audio-wrong-answer');
+
+
+audioWrongAnswer.volume = 0.7;
 
 ipcRenderer.on('asynchronous-reply', (event, data) => {
     switch (data.event) {
         case 'open-team-one':
             document.getElementById('team-one').className += ' visible';
-            audioOpenAnswer.play();
+            playOpenAnswer();
             break;
 
         case 'open-team-two':
             document.getElementById('team-two').className += ' visible';
-            audioOpenAnswer.play();
+            playOpenAnswer();
             break;
 
         case 'open-answer-0':
             document.getElementById('answer-0').className += ' hover';
-            audioOpenAnswer.play();
+            playOpenAnswer();
             document.getElementById('round-score').innerText = data.state.score.round;
             break;
 
         case 'open-answer-1':
             document.getElementById('answer-1').className += ' hover';
-            audioOpenAnswer.play();
+            playOpenAnswer();
             document.getElementById('round-score').innerText = data.state.score.round;
             break;
 
         case 'open-answer-2':
             document.getElementById('answer-2').className += ' hover';
-            audioOpenAnswer.play();
+            playOpenAnswer();
             document.getElementById('round-score').innerText = data.state.score.round;
             break;
 
         case 'open-answer-3':
             document.getElementById('answer-3').className += ' hover';
-            audioOpenAnswer.play();
+            playOpenAnswer();
             document.getElementById('round-score').innerText = data.state.score.round;
             break;
 
         case 'open-answer-4':
             document.getElementById('answer-4').className += ' hover';
-            audioOpenAnswer.play();
+            playOpenAnswer();
             document.getElementById('round-score').innerText = data.state.score.round;
             break;
 
         case 'open-answer-5':
             document.getElementById('answer-5').className += ' hover';
-            audioOpenAnswer.play();
+            playOpenAnswer();
             document.getElementById('round-score').innerText = data.state.score.round;
             break;
 
@@ -128,7 +131,7 @@ ipcRenderer.on('asynchronous-reply', (event, data) => {
 
             document.getElementById('answer-title-' + data.index).innerHTML = title;
             document.getElementById('answer-' + data.index).className += ' hover';
-            audioOpenAnswer.play();
+            playOpenAnswer();
 
             document.getElementById('summa-' + data.team).innerText = data.state.final.score[data.team];
             document.getElementById('round-score').innerText = data.state.score.round;
@@ -169,5 +172,16 @@ ipcRenderer.on('asynchronous-reply', (event, data) => {
                 document.getElementById('answer-11').className += ' hover';
             }
             break;
+
+        case 'update-state':
+            var html = template(data.state);
+            App.innerHTML = html;
+            break;
     }
 });
+
+function playOpenAnswer() {
+    audioOpenAnswer.pause();
+    audioOpenAnswer.currentTime = 0;
+    audioOpenAnswer.play();
+}
