@@ -23,6 +23,8 @@ function loadSettings() {
       store.setState(state);
     }
   });
+
+  createWindow();
 }
 
 function createWindow () {
@@ -42,7 +44,7 @@ function createWindow () {
   });
 
   panel = new BrowserWindow({
-    width: 900,
+    width: 1080,
     height: 600
   });
   panel.loadURL(url.format({
@@ -56,7 +58,7 @@ function createWindow () {
   });
 }
 
-app.on('ready', createWindow);
+app.on('ready', loadSettings);
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
@@ -79,7 +81,8 @@ ipcMain.on('asynchronous-message', (event, data) => {
         store.setState(state);
 
         board.send('asynchronous-reply', {
-          event: 'open-team-' + data.team,
+          event: 'open-team',
+          team: data.team,
           state: state
         });
       }
@@ -90,35 +93,53 @@ ipcMain.on('asynchronous-message', (event, data) => {
       if (state.roundAnswers[data.index].visible) {
         break;
       }
+      if (state.currentRound != 4) {
+        state.score.round += Number(state.roundAnswers[data.index].cost);
+      } else {
+        state.score.round = Number(state.roundAnswers[data.index].cost);
+      }
+
       state.roundAnswers[data.index].visible = true;
-      state.score.round += Number(state.roundAnswers[data.index].cost);
       store.setState(state);
 
       board.send('asynchronous-reply', {
-        event: 'open-answer-' + data.index,
+        event: 'open-answer',
+        index: data.index,
+        state: state
+      });
+      break;
+
+    case 'push-answer':
+      var state = store.getState();
+      state.score[data.team] += state.score.round;
+      state.score.round = 0;
+      store.setState(state);
+
+      board.send('asynchronous-reply', {
+        event: 'push-answer',
+        team: data.team,
         state: state
       });
       break;
 
     case 'win':
       var state = store.getState();
-      if (state.currentRound <= 3) {
-        state.score[data.team] += state.score.round * state.currentRound;
-      } else {
-        state.score[data.team] += state.score.round;
-      }
+      state.score[data.team] += state.score.round * state.currentRound;
       state.score.round = 0;
       store.setState(state);
 
       board.send('asynchronous-reply', {
-        event: 'win-' + data.team,
+        event: 'win',
+        team: data.team,
         state: state
       });
       break;
 
     case 'on-mistake':
       board.send('asynchronous-reply', {
-        event: 'on-mistake-' + data.team + '-' + data.index
+        event: 'on-mistake',
+        team: data.team,
+        index: data.index
       });
       break;
 

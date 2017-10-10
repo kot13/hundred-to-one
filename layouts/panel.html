@@ -75,33 +75,52 @@
     </div>
   </script>
 
+  <script id="naoborot-template" type="text/x-handlebars-template">
+    <div class="pane-group">
+      <div class="pane">
+        <ul class="list-group">
+          {{#each roundAnswers}}
+          <li class="list-group-item">
+            <div class="media-body pull-left">
+              <strong>{{title}}</strong>
+            </div>
+            <button class="btn btn-default pull-right push-answer" id="push-team2-answer-{{@index}}">Начислить команде 2</button>
+            <button class="btn btn-default pull-right push-answer" id="push-team1-answer-{{@index}}">Начислить команде 1</button>
+            <button class="btn btn-default pull-right" id="open-answer-{{@index}}">Открыть</button>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </script>
+
   <script id="final-template" type="text/x-handlebars-template">
     <div class="pane-group">
       <div class="pane">
         <ul class="list-group">
           <li class="list-group-item">
             <input type="text" class="form-control final-answer-title" id="input-answer-title-0" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-0" value="">
+            <input type="number" class="form-control final-answer-cost" id="input-answer-cost-0" value="">
             <button class="btn btn-default pull-right final-answer-open" id="open-answer-0" data-index="0">Открыть</button>
           </li>
           <li class="list-group-item">
             <input type="text" class="form-control final-answer-title" id="input-answer-title-1" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-1" value="">
+            <input type="number" class="form-control final-answer-cost" id="input-answer-cost-1" value="">
             <button class="btn btn-default pull-right final-answer-open" id="open-answer-1" data-index="1">Открыть</button>
           </li>
           <li class="list-group-item">
             <input type="text" class="form-control final-answer-title" id="input-answer-title-2" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-2" value="">
+            <input type="number" class="form-control final-answer-cost" id="input-answer-cost-2" value="">
             <button class="btn btn-default pull-right final-answer-open" id="open-answer-2" data-index="2">Открыть</button>
           </li>
           <li class="list-group-item">
             <input type="text" class="form-control final-answer-title" id="input-answer-title-3" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-3" value="">
+            <input type="number" class="form-control final-answer-cost" id="input-answer-cost-3" value="">
             <button class="btn btn-default pull-right final-answer-open" id="open-answer-3" data-index="3">Открыть</button>
           </li>
           <li class="list-group-item">
             <input type="text" class="form-control final-answer-title" id="input-answer-title-4" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-4" value="">
+            <input type="number" class="form-control final-answer-cost" id="input-answer-cost-4" value="">
             <button class="btn btn-default pull-right final-answer-open" id="open-answer-4" data-index="4">Открыть</button>
           </li>
         </ul>
@@ -113,27 +132,27 @@
         <ul class="list-group">
           <li class="list-group-item">
             <input type="text" class="form-control final-answer-title" id="input-answer-title-5" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-5" value="">
+            <input type="number" class="form-control final-answer-cost" id="input-answer-cost-5" value="">
             <button class="btn btn-default pull-right final-answer-open" id="open-answer-5" data-index="5">Открыть</button>
           </li>
           <li class="list-group-item">
             <input type="text" class="form-control final-answer-title" id="input-answer-title-6" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-6" value="">
+            <input type="number" class="form-control final-answer-cost" id="input-answer-cost-6" value="">
             <button class="btn btn-default pull-right final-answer-open" id="open-answer-6" data-index="6">Открыть</button>
           </li>
           <li class="list-group-item">
             <input type="text" class="form-control final-answer-title" id="input-answer-title-7" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-7" value="">
+            <input type="number" class="form-control final-answer-cost" id="input-answer-cost-7" value="">
             <button class="btn btn-default pull-right final-answer-open" id="open-answer-7" data-index="7">Открыть</button>
           </li>
           <li class="list-group-item">
             <input type="text" class="form-control final-answer-title" id="input-answer-title-8" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-8" value="">
+            <input type="number" class="form-control final-answer-cost" id="input-answer-cost-8" value="">
             <button class="btn btn-default pull-right final-answer-open" id="open-answer-8" data-index="8">Открыть</button>
           </li>
           <li class="list-group-item">
             <input type="text" class="form-control final-answer-title" id="input-answer-title-9" value="">
-            <input type="text" class="form-control final-answer-cost" id="input-answer-cost-9" value="">
+            <input type="number" class="form-control final-answer-cost" id="input-answer-cost-9" value="">
             <button class="btn btn-default pull-right final-answer-open" id="open-answer-9" data-index="9">Открыть</button>
           </li>
         </ul>

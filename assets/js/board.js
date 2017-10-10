@@ -29,88 +29,29 @@ audioWrongAnswer.volume = 0.7;
 
 ipcRenderer.on('asynchronous-reply', (event, data) => {
     switch (data.event) {
-        case 'open-team-one':
-            document.getElementById('team-one').className += ' visible';
+        case 'open-team':
+            document.getElementById('team-'+data.team).className += ' visible';
             playOpenAnswer();
             break;
 
-        case 'open-team-two':
-            document.getElementById('team-two').className += ' visible';
-            playOpenAnswer();
-            break;
-
-        case 'open-answer-0':
-            document.getElementById('answer-0').className += ' hover';
-            playOpenAnswer();
+        case 'open-answer':
+            document.getElementById('answer-'+data.index).className += ' hover';
             document.getElementById('round-score').innerText = data.state.score.round;
-            break;
-
-        case 'open-answer-1':
-            document.getElementById('answer-1').className += ' hover';
             playOpenAnswer();
-            document.getElementById('round-score').innerText = data.state.score.round;
             break;
 
-        case 'open-answer-2':
-            document.getElementById('answer-2').className += ' hover';
-            playOpenAnswer();
-            document.getElementById('round-score').innerText = data.state.score.round;
+        case 'on-mistake':
+            document.getElementById('mistake-'+data.team+'-'+data.index).className += ' on';
+            playMistake();
             break;
 
-        case 'open-answer-3':
-            document.getElementById('answer-3').className += ' hover';
-            playOpenAnswer();
-            document.getElementById('round-score').innerText = data.state.score.round;
-            break;
-
-        case 'open-answer-4':
-            document.getElementById('answer-4').className += ' hover';
-            playOpenAnswer();
-            document.getElementById('round-score').innerText = data.state.score.round;
-            break;
-
-        case 'open-answer-5':
-            document.getElementById('answer-5').className += ' hover';
-            playOpenAnswer();
-            document.getElementById('round-score').innerText = data.state.score.round;
-            break;
-
-        case 'on-mistake-one-0':
-            document.getElementById('mistake-one-0').className += ' on';
-            audioWrongAnswer.play();
-            break;
-
-        case 'on-mistake-one-1':
-            document.getElementById('mistake-one-1').className += ' on';
-            audioWrongAnswer.play();
-            break;
-
-        case 'on-mistake-one-2':
-            document.getElementById('mistake-one-2').className += ' on';
-            audioWrongAnswer.play();
-            break;
-
-        case 'on-mistake-two-0':
-            document.getElementById('mistake-two-0').className += ' on';
-            audioWrongAnswer.play();
-            break;
-
-        case 'on-mistake-two-1':
-            document.getElementById('mistake-two-1').className += ' on';
-            audioWrongAnswer.play();
-            break;
-
-        case 'on-mistake-two-2':
-            document.getElementById('mistake-two-2').className += ' on';
-            audioWrongAnswer.play();
-            break;
-
-        case 'win-one':
-            document.getElementById('score-one').innerText = data.state.score.one;
+        case 'win':
+            document.getElementById('score-'+data.team).innerText = data.state.score[data.team];
             document.getElementById('round-score').innerText = 0;
             break;
-        case 'win-two':
-            document.getElementById('score-two').innerText = data.state.score.two;
+
+        case 'push-answer':
+            document.getElementById('score-'+data.team).innerText = data.state.score[data.team];
             document.getElementById('round-score').innerText = 0;
             break;
 
@@ -184,4 +125,10 @@ function playOpenAnswer() {
     audioOpenAnswer.pause();
     audioOpenAnswer.currentTime = 0;
     audioOpenAnswer.play();
+}
+
+function playMistake() {
+    audioWrongAnswer.pause();
+    audioWrongAnswer.currentTime = 0;
+    audioWrongAnswer.play();
 }

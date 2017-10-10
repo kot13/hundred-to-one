@@ -5,6 +5,7 @@ const store         = require('./store');
 
 const content        = document.getElementById('content');
 const roundSource    = document.getElementById('round-template').innerHTML;
+const naoborotSource = document.getElementById('naoborot-template').innerHTML;
 const finalSource    = document.getElementById('final-template').innerHTML;
 const settingsSource = document.getElementById('settings-template').innerHTML;
 let template         = Handlebars.compile(roundSource);
@@ -33,8 +34,10 @@ openTeamTwo.addEventListener('click', function (event) {
 });
 
 openSettings.addEventListener('click', function (event) {
+    var state = store.getState();
+    console.log(state);
     let template      = Handlebars.compile(settingsSource);
-    content.innerHTML = template(store.getState());
+    content.innerHTML = template(state);
 
     document.getElementById('cancel').addEventListener('click', function (event) {
         template          = Handlebars.compile(roundSource);
@@ -73,11 +76,15 @@ nextRound.addEventListener('click', function (event) {
 ipcRenderer.on('asynchronous-reply', (event, data) => {
     switch (data.event) {
         case 'next-round':
-            if (data.state.currentRound != 5) {
+            if (data.state.currentRound < 4) {
                 template          = Handlebars.compile(roundSource);
                 content.innerHTML = template(data.state);
                 init();
-            } else {
+            } else if (data.state.currentRound == 4) {
+                template          = Handlebars.compile(naoborotSource);
+                content.innerHTML = template(data.state);
+                naoborotInit();
+            } else if (data.state.currentRound == 5){
                 template          = Handlebars.compile(finalSource);
                 content.innerHTML = template(data.state);
                 finalInit();
@@ -188,6 +195,131 @@ function init() {
     });
 }
 
+function naoborotInit() {
+    document.getElementById('open-answer-0').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'open-answer',
+            index: 0
+        });
+    });
+    document.getElementById('open-answer-1').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'open-answer',
+            index: 1
+        });
+    });
+    document.getElementById('open-answer-2').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'open-answer',
+            index: 2
+        });
+    });
+    document.getElementById('open-answer-3').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'open-answer',
+            index: 3
+        });
+    });
+    document.getElementById('open-answer-4').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'open-answer',
+            index: 4
+        });
+    });
+    document.getElementById('open-answer-5').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'open-answer',
+            index: 5
+        });
+    });
+
+    document.getElementById('push-team1-answer-0').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'push-answer',
+            team: 'one',
+            index: 0
+        });
+    });
+    document.getElementById('push-team1-answer-1').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'push-answer',
+            team: 'one',
+            index: 1
+        });
+    });
+    document.getElementById('push-team1-answer-2').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'push-answer',
+            team: 'one',
+            index: 2
+        });
+    });
+    document.getElementById('push-team1-answer-3').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'push-answer',
+            team: 'one',
+            index: 3
+        });
+    });
+    document.getElementById('push-team1-answer-4').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'push-answer',
+            team: 'one',
+            index: 4
+        });
+    });
+    document.getElementById('push-team1-answer-5').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'push-answer',
+            team: 'one',
+            index: 5
+        });
+    });
+
+    document.getElementById('push-team2-answer-0').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'push-answer',
+            team: 'two',
+            index: 0
+        });
+    });
+    document.getElementById('push-team2-answer-1').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'push-answer',
+            team: 'two',
+            index: 1
+        });
+    });
+    document.getElementById('push-team2-answer-2').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'push-answer',
+            team: 'two',
+            index: 2
+        });
+    });
+    document.getElementById('push-team2-answer-3').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'push-answer',
+            team: 'two',
+            index: 3
+        });
+    });
+    document.getElementById('push-team2-answer-4').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'push-answer',
+            team: 'two',
+            index: 4
+        });
+    });
+    document.getElementById('push-team2-answer-5').addEventListener('click', function (event) {
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'push-answer',
+            team: 'two',
+            index: 5
+        });
+    });
+}
+
 function finalInit() {
     document.getElementById('open-answer-0').addEventListener('click', openHandler);
     document.getElementById('open-answer-1').addEventListener('click', openHandler);
@@ -199,8 +331,6 @@ function finalInit() {
     document.getElementById('open-answer-7').addEventListener('click', openHandler);
     document.getElementById('open-answer-8').addEventListener('click', openHandler);
     document.getElementById('open-answer-9').addEventListener('click', openHandler);
-    document.getElementById('open-answer-10').addEventListener('click', openHandler);
-    document.getElementById('open-answer-11').addEventListener('click', openHandler);
 
     document.getElementById('close-one').addEventListener('click', function (event) {
         ipcRenderer.send('asynchronous-message', {
