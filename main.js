@@ -7,24 +7,38 @@ const storage = require('electron-json-storage');
 
 let board, panel;
 
+let boardIsReady = false;
+let panelIsReady = false;
+
 storage.setDataPath(os.tmpdir());
 
 function loadSettings() {
-  storage.get('hundred-to-one', function(error, data) {
-    if (error) {
-      throw error;
-    }
+  if (boardIsReady && panelIsReady) {
+    storage.get('hundred-to-one', function (error, data) {
+      if (error) {
+        throw error;
+      }
 
-    if (Object.keys(data).length != 0) {
-      var state = store.getState();
-      state.rounds = data;
-      state.roundAnswers = state.rounds[0].answers;
+      if (Object.keys(data).length != 0) {
+        var state = store.getState();
+        state.rounds = data;
+        state.roundAnswers = state.rounds[0].answers;
+        state.isSet = true;
 
-      store.setState(state);
-    }
-  });
+        store.setState(state);
+      }
 
-  createWindow();
+      board.send('asynchronous-reply', {
+        event: 'update-state',
+        state: state
+      });
+
+      panel.send('asynchronous-reply', {
+        event: 'update-state',
+        state: state
+      });
+    });
+  }
 }
 
 function createWindow () {
@@ -38,7 +52,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  board.webContents.openDevTools();
+  // board.webContents.openDevTools();
   board.on('closed', function () {
     board = null;
   });
@@ -52,13 +66,13 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  panel.webContents.openDevTools();
+  // panel.webContents.openDevTools();
   panel.on('closed', function () {
     panel = null
   });
 }
 
-app.on('ready', loadSettings);
+app.on('ready', createWindow);
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
@@ -205,6 +219,20 @@ ipcMain.on('asynchronous-message', (event, data) => {
         event: 'open',
         team: data.team
       });
+      break;
+
+    case 'panel-ready':
+      panelIsReady = true;
+      loadSettings();
+      break;
+
+    case 'board-ready':
+      boardIsReady = true;
+      loadSettings();
+      break;
+
+    case 'close-app':
+      app.quit()
       break;
   }
 });

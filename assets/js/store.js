@@ -197,11 +197,11 @@ state.roundAnswers = state.rounds[0].answers;
 
 function getState () {
     return state;
-};
+}
 
 function setState (newState) {
     state = newState;
-};
+}
 
 module.exports.getState = getState;
 module.exports.setState = setState;

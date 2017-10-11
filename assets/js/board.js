@@ -1,4 +1,5 @@
-const {ipcRenderer} = require('electron');
+const {ipcRenderer, remote, ipcMain} = require('electron');
+const {Menu} = remote;
 const Handlebars = require('handlebars');
 const store = require('./store');
 
@@ -6,6 +7,39 @@ const App            = document.getElementById('app');
 const sourceTemplate = document.getElementById('board-template').innerHTML;
 const sourceRound    = document.getElementById('round-template').innerHTML;
 const sourceFinal    = document.getElementById('final-template').innerHTML;
+const menuTemplate   = [
+    {
+        label: 'View',
+        submenu: [
+            {role: 'resetzoom'},
+            {role: 'zoomin'},
+            {role: 'zoomout'},
+            {type: 'separator'},
+            {role: 'togglefullscreen'}
+        ]
+    },
+    {
+        role: 'window',
+        submenu: [
+            {role: 'minimize'},
+            {role: 'close'}
+        ]
+    }
+];
+const menu = Menu.buildFromTemplate(menuTemplate);
+
+window.addEventListener('contextmenu', (e) => {
+    e.preventDefault()
+    menu.popup(remote.getCurrentWindow())
+}, false);
+
+document.onreadystatechange = function(){
+    if (document.readyState === 'complete'){
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'board-ready'
+        });
+    }
+};
 
 Handlebars.registerHelper('for', function(from, to, increment, block) {
     let result = '';

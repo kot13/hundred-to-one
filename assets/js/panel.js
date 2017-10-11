@@ -1,6 +1,7 @@
 const {ipcRenderer} = require('electron');
 const Handlebars    = require('handlebars');
 const storage       = require('electron-json-storage');
+const os            = require('os');
 const store         = require('./store');
 
 const content        = document.getElementById('content');
@@ -8,16 +9,26 @@ const roundSource    = document.getElementById('round-template').innerHTML;
 const naoborotSource = document.getElementById('naoborot-template').innerHTML;
 const finalSource    = document.getElementById('final-template').innerHTML;
 const settingsSource = document.getElementById('settings-template').innerHTML;
-let template         = Handlebars.compile(roundSource);
-
-let state = store.getState();
-content.innerHTML    = template(state);
 
 const openTeamOne  = document.getElementById('open-team-one');
 const openTeamTwo  = document.getElementById('open-team-two');
 const openSettings = document.getElementById('open-settings');
 const nextRound    = document.getElementById('next-round');
 
+let template      = Handlebars.compile(roundSource);
+let state         = store.getState();
+content.innerHTML = template(store.getState());
+
+storage.setDataPath(os.tmpdir());
+init();
+
+document.onreadystatechange = function(){
+    if (document.readyState === 'complete'){
+        ipcRenderer.send('asynchronous-message', {
+            cmd: 'panel-ready'
+        });
+    }
+};
 
 openTeamOne.addEventListener('click', function (event) {
     ipcRenderer.send('asynchronous-message', {
@@ -34,9 +45,7 @@ openTeamTwo.addEventListener('click', function (event) {
 });
 
 openSettings.addEventListener('click', function (event) {
-    var state = store.getState();
-    console.log(state);
-    let template      = Handlebars.compile(settingsSource);
+    template          = Handlebars.compile(settingsSource);
     content.innerHTML = template(state);
 
     document.getElementById('cancel').addEventListener('click', function (event) {
@@ -46,7 +55,6 @@ openSettings.addEventListener('click', function (event) {
     });
 
     document.getElementById('save').addEventListener('click', function (event) {
-        var state = store.getState();
         state.rounds.forEach(function(round, roundIndex) {
             round.answers.forEach(function(answer, answerIndex) {
                 state.rounds[roundIndex].answers[answerIndex].title   = document.getElementById('answer-title-'+roundIndex+'-'+answerIndex).value;
@@ -61,9 +69,12 @@ openSettings.addEventListener('click', function (event) {
             if (error) throw error;
         });
 
-        template          = Handlebars.compile(roundSource);
-        content.innerHTML = template(state);
-        init();
+        if (confirm('Настройки сохранены. Приложение будет выключено.')) {
+            ipcRenderer.send('asynchronous-message', {
+                cmd: 'close-app'
+            });
+        }
+
     });
 });
 
@@ -92,6 +103,7 @@ ipcRenderer.on('asynchronous-reply', (event, data) => {
             break;
 
         case 'update-state':
+            state = data.state;
             var html = template(data.state);
             content.innerHTML = html;
             init();
@@ -376,5 +388,3 @@ function openHandler (event) {
         index: index
     });
 }
-
-init();
