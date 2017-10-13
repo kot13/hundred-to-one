@@ -50,16 +50,13 @@ Handlebars.registerHelper('for', function(from, to, increment, block) {
 });
 
 Handlebars.registerPartial('gameField', sourceRound);
-
 let template = Handlebars.compile(sourceTemplate);
-
 App.innerHTML = template(store.getState());
 
 const audioOpenAnswer  = document.getElementById('audio-open-answer');
 const audioWrongAnswer = document.getElementById('audio-wrong-answer');
 
-
-audioWrongAnswer.volume = 0.7;
+audioWrongAnswer.volume = 0.55;
 
 ipcRenderer.on('asynchronous-reply', (event, data) => {
     switch (data.event) {
@@ -82,15 +79,20 @@ ipcRenderer.on('asynchronous-reply', (event, data) => {
         case 'win':
             document.getElementById('score-'+data.team).innerText = data.state.score[data.team];
             document.getElementById('round-score').innerText = 0;
+            playOpenAnswer();
             break;
 
         case 'push-answer':
             document.getElementById('score-'+data.team).innerText = data.state.score[data.team];
             document.getElementById('round-score').innerText = 0;
+            playOpenAnswer();
             break;
 
         case 'next-round':
+        case 'prev-round':
             if (data.state.currentRound != 5) {
+                Handlebars.registerPartial('gameField', sourceRound);
+                template = Handlebars.compile(sourceTemplate);
                 html = template(data.state);
             } else {
                 Handlebars.registerPartial('gameField', sourceFinal);
@@ -102,7 +104,7 @@ ipcRenderer.on('asynchronous-reply', (event, data) => {
             break;
 
         case 'final-open-answer':
-            let title = data.title + '<span class="percent">' + data.cost + '</span>';
+            let title = '<span class="title">' + data.title + '</span>' + '<span class="percent">' + data.cost + '</span>';
 
             document.getElementById('answer-title-' + data.index).innerHTML = title;
             document.getElementById('answer-' + data.index).className += ' hover';
@@ -119,14 +121,12 @@ ipcRenderer.on('asynchronous-reply', (event, data) => {
                 document.getElementById('answer-2').classList.remove('hover');
                 document.getElementById('answer-3').classList.remove('hover');
                 document.getElementById('answer-4').classList.remove('hover');
-                document.getElementById('answer-5').classList.remove('hover');
             } else {
+                document.getElementById('answer-5').classList.remove('hover');
                 document.getElementById('answer-6').classList.remove('hover');
                 document.getElementById('answer-7').classList.remove('hover');
                 document.getElementById('answer-8').classList.remove('hover');
                 document.getElementById('answer-9').classList.remove('hover');
-                document.getElementById('answer-10').classList.remove('hover');
-                document.getElementById('answer-11').classList.remove('hover');
             }
             break;
 
@@ -137,14 +137,12 @@ ipcRenderer.on('asynchronous-reply', (event, data) => {
                 document.getElementById('answer-2').className += ' hover';
                 document.getElementById('answer-3').className += ' hover';
                 document.getElementById('answer-4').className += ' hover';
-                document.getElementById('answer-5').className += ' hover';
             } else {
+                document.getElementById('answer-5').className += ' hover';
                 document.getElementById('answer-6').className += ' hover';
                 document.getElementById('answer-7').className += ' hover';
                 document.getElementById('answer-8').className += ' hover';
                 document.getElementById('answer-9').className += ' hover';
-                document.getElementById('answer-10').className += ' hover';
-                document.getElementById('answer-11').className += ' hover';
             }
             break;
 

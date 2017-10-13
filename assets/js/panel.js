@@ -14,6 +14,7 @@ const openTeamOne  = document.getElementById('open-team-one');
 const openTeamTwo  = document.getElementById('open-team-two');
 const openSettings = document.getElementById('open-settings');
 const nextRound    = document.getElementById('next-round');
+const prevRound    = document.getElementById('prev-round');
 
 let template      = Handlebars.compile(roundSource);
 let state         = store.getState();
@@ -84,9 +85,16 @@ nextRound.addEventListener('click', function (event) {
     });
 });
 
+prevRound.addEventListener('click', function (event) {
+    ipcRenderer.send('asynchronous-message', {
+        cmd: 'prev-round'
+    });
+});
+
 ipcRenderer.on('asynchronous-reply', (event, data) => {
     switch (data.event) {
         case 'next-round':
+        case 'prev-round':
             if (data.state.currentRound < 4) {
                 template          = Handlebars.compile(roundSource);
                 content.innerHTML = template(data.state);

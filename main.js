@@ -23,20 +23,19 @@ function loadSettings() {
         var state = store.getState();
         state.rounds = data;
         state.roundAnswers = state.rounds[0].answers;
-        state.isSet = true;
 
         store.setState(state);
+
+        board.send('asynchronous-reply', {
+          event: 'update-state',
+          state: state
+        });
+
+        panel.send('asynchronous-reply', {
+          event: 'update-state',
+          state: state
+        });
       }
-
-      board.send('asynchronous-reply', {
-        event: 'update-state',
-        state: state
-      });
-
-      panel.send('asynchronous-reply', {
-        event: 'update-state',
-        state: state
-      });
     });
   }
 }
@@ -52,7 +51,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  // board.webContents.openDevTools();
+  board.webContents.openDevTools();
   board.on('closed', function () {
     board = null;
   });
@@ -66,7 +65,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  // panel.webContents.openDevTools();
+  panel.webContents.openDevTools();
   panel.on('closed', function () {
     panel = null
   });
@@ -180,6 +179,28 @@ ipcMain.on('asynchronous-message', (event, data) => {
       });
       break;
 
+    case 'prev-round':
+      var state = store.getState();
+      if (state.currentRound == 1) {
+        break;
+      }
+      state.currentRound--;
+      if (state.currentRound < 5) {
+        state.roundAnswers = state.rounds[state.currentRound-1].answers;
+      }
+      state.score.round = 0;
+      store.setState(state);
+
+      board.send('asynchronous-reply', {
+        event: 'prev-round',
+        state: state
+      });
+      panel.send('asynchronous-reply', {
+        event: 'prev-round',
+        state: state
+      });
+      break;
+
     case 'final-open-answer':
       var state = store.getState();
       if (state.final.answers[data.index].visible) {
@@ -232,7 +253,7 @@ ipcMain.on('asynchronous-message', (event, data) => {
       break;
 
     case 'close-app':
-      app.quit()
+      app.quit();
       break;
   }
 });

@@ -29,6 +29,9 @@
 
     <footer class="toolbar toolbar-footer">
       <div class="toolbar-actions">
+        <button class="btn btn-primary" id="prev-round">
+          Предыдущий раунд
+        </button>
         <button class="btn btn-primary pull-right" id="next-round">
           Следующий раунд
         </button>
@@ -174,7 +177,7 @@
             {{#each rounds.0.answers}}
             <div class="form-group">
               <input type="text" class="form-control answer-title" value="{{title}}" id="answer-title-0-{{@index}}">
-              <input type="text" class="form-control answer-cost" value="{{cost}}" id="answer-cost-0-{{@index}}">
+              <input type="number" class="form-control answer-cost" value="{{cost}}" id="answer-cost-0-{{@index}}">
             </div>
             {{/each}}
           </div>
@@ -191,7 +194,7 @@
             {{#each rounds.1.answers}}
             <div class="form-group">
               <input type="text" class="form-control answer-title" value="{{title}}" id="answer-title-1-{{@index}}">
-              <input type="text" class="form-control answer-cost" value="{{cost}}" id="answer-cost-1-{{@index}}">
+              <input type="number" class="form-control answer-cost" value="{{cost}}" id="answer-cost-1-{{@index}}">
             </div>
             {{/each}}
           </div>
@@ -204,7 +207,7 @@
             {{#each rounds.2.answers}}
             <div class="form-group">
               <input type="text" class="form-control answer-title" value="{{title}}" id="answer-title-2-{{@index}}">
-              <input type="text" class="form-control answer-cost" value="{{cost}}" id="answer-cost-2-{{@index}}">
+              <input type="number" class="form-control answer-cost" value="{{cost}}" id="answer-cost-2-{{@index}}">
             </div>
             {{/each}}
           </div>
@@ -217,7 +220,7 @@
             {{#each rounds.3.answers}}
             <div class="form-group">
               <input type="text" class="form-control answer-title" value="{{title}}" id="answer-title-3-{{@index}}">
-              <input type="text" class="form-control answer-cost" value="{{cost}}" id="answer-cost-3-{{@index}}">
+              <input type="number" class="form-control answer-cost" value="{{cost}}" id="answer-cost-3-{{@index}}">
             </div>
             {{/each}}
           </div>

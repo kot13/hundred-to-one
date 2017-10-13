@@ -55,14 +55,20 @@
     </div>
     <div class="answers-column">
       {{#each roundAnswers}}
-      <div class="flip-container" id="answer-{{@index}}">
+        {{#if visible}}
+            <div class="flip-container hover" id="answer-{{@index}}">
+        {{else}}
+            <div class="flip-container" id="answer-{{@index}}">
+        {{/if}}
         <div class="flipper">
           <div class="front">
             <img src="../assets/images/answer-{{@index}}.png">
           </div>
           <div class="back">
             <div class="answer">
-              {{ title }}
+              <span class="title">
+                {{ title }}
+              </span>
               <span class="percent">{{ cost }}</span>
             </div>
           </div>

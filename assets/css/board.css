@@ -15,7 +15,7 @@ html {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(to bottom, #3cadc1, #0562a1);
+    background-image: linear-gradient(to bottom, #006699, #003366);
 }
 body {
     position: absolute;
@@ -36,10 +36,10 @@ body {
 .team {
     visibility: hidden;
     float: left;
-    width: 420px;
-    padding-top: 60px;
+    width: 440px;
+    padding-top: 20px;
     font-family: SFUIText;
-    font-size: 32px;
+    font-size: 48px;
     font-weight: 900;
     letter-spacing: 1.1px;
     text-align: left;
@@ -56,7 +56,7 @@ body {
 }
 .total-score {
     float: left;
-    width: 260px;
+    width: 220px;
     text-align: center;
 }
 .score-block {
@@ -204,6 +204,14 @@ body {
     width: 460px;
     height: 56px;
 }
+.answer .title {
+    width: 330px;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    float: left;
+    white-space: nowrap;
+}
 .answer .percent {
     float: right;
 }
@@ -223,7 +231,7 @@ body {
     background-image: linear-gradient(to bottom, #303030, #000000);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     border: solid 1.6px #000000;
-    padding: 0 29px;
+    padding: 0 20px;
     box-sizing: border-box;
     font-family: Akrobat;
     font-size: 44px;
@@ -233,6 +241,14 @@ body {
     color: #ffffff;
     width: 354px;
     height: 56px;
+}
+.final .title {
+    width: 240px;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    float: left;
+    white-space: nowrap;
 }
 .final .percent {
     float: right;
