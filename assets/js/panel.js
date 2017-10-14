@@ -51,7 +51,7 @@ openSettings.addEventListener('click', function (event) {
 
     document.getElementById('cancel').addEventListener('click', function (event) {
         template          = Handlebars.compile(roundSource);
-        content.innerHTML = template(store.getState());
+        content.innerHTML = template(state);
         init();
     });
 
@@ -64,9 +64,15 @@ openSettings.addEventListener('click', function (event) {
             });
         });
 
+        state.volume.mistake = Number(document.getElementById('volume-mistake').value);
+        state.volume.answer = Number(document.getElementById('volume-answer').value);
+
         store.setState(state);
 
-        storage.set('hundred-to-one', state.rounds, function(error) {
+        storage.set('hundred-to-one', {
+            rounds: state.rounds,
+            volume: state.volume
+        }, function(error) {
             if (error) throw error;
         });
 

@@ -25,3 +25,7 @@
 .final-answer-open{
     width: 25%;
 }
+
+input[type=range]:focus {
+    box-shadow: none;
+}

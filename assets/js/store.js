@@ -1,4 +1,8 @@
 let state = {
+    volume: {
+        mistake: 100,
+        answer: 100
+    },
     currentRound: 1,
     teams: {
         one: {

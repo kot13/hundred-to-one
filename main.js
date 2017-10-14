@@ -19,9 +19,14 @@ function loadSettings() {
         throw error;
       }
 
-      if (Object.keys(data).length != 0) {
+      if (
+          Object.keys(data).length != 0
+          && data.rounds != undefined
+          && data.volume != undefined
+      ) {
         var state = store.getState();
-        state.rounds = data;
+        state.rounds = data.rounds;
+        state.volume = data.volume;
         state.roundAnswers = state.rounds[0].answers;
 
         store.setState(state);
@@ -51,13 +56,13 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  board.webContents.openDevTools();
+  // board.webContents.openDevTools();
   board.on('closed', function () {
     board = null;
   });
 
   panel = new BrowserWindow({
-    width: 1080,
+    width: 1280,
     height: 600
   });
   panel.loadURL(url.format({
@@ -65,7 +70,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  panel.webContents.openDevTools();
+  // panel.webContents.openDevTools();
   panel.on('closed', function () {
     panel = null
   });

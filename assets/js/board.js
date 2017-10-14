@@ -56,8 +56,6 @@ App.innerHTML = template(store.getState());
 const audioOpenAnswer  = document.getElementById('audio-open-answer');
 const audioWrongAnswer = document.getElementById('audio-wrong-answer');
 
-audioWrongAnswer.volume = 0.55;
-
 ipcRenderer.on('asynchronous-reply', (event, data) => {
     switch (data.event) {
         case 'open-team':
@@ -148,6 +146,9 @@ ipcRenderer.on('asynchronous-reply', (event, data) => {
 
         case 'update-state':
             var html = template(data.state);
+            audioOpenAnswer.volume  = data.state.volume.answer / 100;
+            audioWrongAnswer.volume = data.state.volume.mistake / 100;
+
             App.innerHTML = html;
             break;
     }
