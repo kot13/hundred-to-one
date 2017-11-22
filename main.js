@@ -27,6 +27,7 @@ function loadSettings() {
         var state = store.getState();
         state.rounds = data.rounds;
         state.volume = data.volume;
+        state.teams  = data.teams;
         state.roundAnswers = state.rounds[0].answers;
 
         store.setState(state);

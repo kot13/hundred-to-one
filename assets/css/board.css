@@ -39,11 +39,15 @@ body {
     width: 440px;
     padding-top: 20px;
     font-family: SFUIText;
-    font-size: 48px;
+    font-size: 46px;
     font-weight: 900;
     letter-spacing: 1.1px;
     text-align: left;
     color: #ffffff;
+    height: 70px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .team.one {
     text-align: left;

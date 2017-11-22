@@ -67,11 +67,15 @@ openSettings.addEventListener('click', function (event) {
         state.volume.mistake = Number(document.getElementById('volume-mistake').value);
         state.volume.answer = Number(document.getElementById('volume-answer').value);
 
+        state.teams.one.title = document.getElementById('team-one').value;
+        state.teams.two.title = document.getElementById('team-two').value;
+
         store.setState(state);
 
         storage.set('hundred-to-one', {
             rounds: state.rounds,
-            volume: state.volume
+            volume: state.volume,
+            teams: state.teams
         }, function(error) {
             if (error) throw error;
         });
