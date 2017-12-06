@@ -23,6 +23,7 @@ function loadSettings() {
           Object.keys(data).length != 0
           && data.rounds != undefined
           && data.volume != undefined
+          && data.teams != undefined
       ) {
         var state = store.getState();
         state.rounds = data.rounds;
