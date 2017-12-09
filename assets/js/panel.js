@@ -18,9 +18,10 @@ const prevRound    = document.getElementById('prev-round');
 
 let template      = Handlebars.compile(roundSource);
 let state         = store.getState();
+let dir           = os.homedir() + '/hundred-to-one/data';
 content.innerHTML = template(store.getState());
 
-storage.setDataPath(os.tmpdir());
+storage.setDataPath(dir);
 init();
 
 document.onreadystatechange = function(){
@@ -77,7 +78,9 @@ openSettings.addEventListener('click', function (event) {
             volume: state.volume,
             teams: state.teams
         }, function(error) {
-            if (error) throw error;
+            if (error) {
+                alert('Не удалось сохранить изменения');
+            }
         });
 
         if (confirm('Настройки сохранены. Приложение будет выключено.')) {

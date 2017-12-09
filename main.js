@@ -10,13 +10,15 @@ let board, panel;
 let boardIsReady = false;
 let panelIsReady = false;
 
-storage.setDataPath(os.tmpdir());
+let dir = os.homedir() + '/hundred-to-one/data';
+
+storage.setDataPath(dir);
 
 function loadSettings() {
   if (boardIsReady && panelIsReady) {
     storage.get('hundred-to-one', function (error, data) {
       if (error) {
-        throw error;
+        return;
       }
 
       if (
