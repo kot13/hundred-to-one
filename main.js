@@ -218,7 +218,7 @@ ipcMain.on('asynchronous-message', (event, data) => {
 
       state.final.answers[data.index].visible = true;
       let team = 'one';
-      if (data.index <= 5) {
+      if (data.index <= 4) {
         state.final.score.one += Number(data.cost);
       } else {
         team = 'two';
